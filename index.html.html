@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Love Over Coffee, Vijay Nagar: Digital Presence Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F6F8; --panel:#FFFFFF; --ink:#15213B; --muted:#5B6577; --line:#DCE0E8;
+  --red:#D4243B; --mint:#1F8A70; --amber:#C98A00; --latte:#B8895F; --soft:#EDF0F5;
+  --display:'Bricolage Grotesque','Trebuchet MS',Arial,sans-serif;
+  --body:'Instrument Sans','Segoe UI',Helvetica,Arial,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1522; --panel:#172033; --ink:#EAEFF7; --muted:#9AA6BB; --line:#2A3650;
+    --red:#FF5A6E; --mint:#4CC3A1; --amber:#F2B83B; --latte:#D2A57C; --soft:#1E2940;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1522; --panel:#172033; --ink:#EAEFF7; --muted:#9AA6BB; --line:#2A3650;
+  --red:#FF5A6E; --mint:#4CC3A1; --amber:#F2B83B; --latte:#D2A57C; --soft:#1E2940;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body)}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0 0 .5em;letter-spacing:-.01em}
+h1{font-size:clamp(1.9rem,4.5vw,3rem);font-weight:700}
+h2{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:700}
+h3{font-size:1.1rem;font-weight:700}
+p{margin:0 0 .8em;max-width:70ch}
+a{color:var(--red)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px}
+nav button{flex:none;font:600 .92rem var(--body);color:var(--muted);background:transparent;border:1px solid transparent;border-radius:999px;padding:8px 14px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+nav button:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.tab{display:none;padding:26px 0 60px}
+.tab.on{display:block}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+.panel.flat{border-radius:4px}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.chip{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-size:.84rem;background:var(--soft);margin:0 4px 4px 0}
+.tag{display:inline-block;font-size:.78rem;font-weight:600;padding:2px 9px;border-radius:999px;margin-left:6px;vertical-align:middle}
+.tag.ok{background:color-mix(in srgb,var(--mint) 18%,transparent);color:var(--mint)}
+.tag.warn{background:color-mix(in srgb,var(--amber) 20%,transparent);color:var(--amber)}
+.tag.bad{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+.note{border-left:4px solid var(--amber);background:color-mix(in srgb,var(--amber) 11%,transparent);padding:10px 14px;border-radius:0 6px 6px 0;margin:0 0 16px;font-size:.93rem}
+input[type=text],input[type=number],textarea,select{width:100%;font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+textarea{resize:vertical;min-height:70px}
+label{font-weight:600;font-size:.9rem;display:block;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:.85rem}
+.scroll{overflow-x:auto}
+.btn{font:600 .92rem var(--body);background:var(--ink);color:var(--bg);border:0;border-radius:6px;padding:9px 14px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.cv{position:relative;width:100%;height:300px}
+.cv.tall{height:380px}
+
+/* hero mock of the Google listing */
+.hero{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:center;padding:8px 0 26px}
+.listing{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 1px 0 var(--line)}
+.listing .name{font:700 1.25rem var(--display)}
+.listing .rate{display:flex;align-items:center;gap:8px;margin:4px 0}
+.stars{color:#F4B400;letter-spacing:2px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.actions span{border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:.86rem;font-weight:600;color:var(--red)}
+.listing dl{margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.9rem}
+.listing dt{color:var(--muted)}
+.listing dd{margin:0}
+.tiles .panel b{font:700 2rem var(--display);display:block}
+
+/* sliders */
+.crit{padding:14px 0;border-bottom:1px solid var(--line)}
+.crit:last-child{border-bottom:0}
+.crit .top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.crit input[type=range]{width:100%;accent-color:var(--red)}
+.score{font:700 1.2rem var(--display);min-width:2.4em;text-align:right}
+
+/* plan */
+.task{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--panel);margin-bottom:10px}
+.task.done{opacity:.6}
+.task.done .act{text-decoration:line-through}
+.task input[type=checkbox]{width:22px;height:22px;accent-color:var(--mint);margin-top:3px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;font-size:.84rem}
+.bar{height:10px;background:var(--soft);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--mint);width:0;transition:width .3s}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.filters select{width:auto}
+
+/* A4 card */
+.cardwrap{overflow-x:auto;padding:6px 0}
+#card{width:210mm;min-height:297mm;background:#fff;color:#15213B;margin:0 auto;padding:16mm 15mm;border:1px solid #ccd2dc;font-family:var(--body);display:flex;flex-direction:column;gap:7mm}
+#card h2{font-size:26pt;margin:0;color:#15213B}
+#card .bk{border-top:4px solid #D4243B;padding-top:4mm}
+#card label{color:#5B6577;font-size:10pt}
+#card .val{font-size:13pt;line-height:1.35;border:0;padding:0;background:transparent;color:#15213B;width:100%;font-family:inherit;resize:none;min-height:0}
+#card .row{display:flex;gap:8mm}
+#card .row>div{flex:1}
+#card .qr{align-self:center;text-align:center;margin-top:auto}
+#card .qr .box{display:inline-block;padding:4mm;border:2px solid #15213B;border-radius:4px}
+#card .sc{display:flex;gap:6mm;flex-wrap:wrap}
+#card .sc div{border:1px solid #ccd2dc;padding:3mm 5mm;border-radius:4px}
+#card .sc b{font:700 20pt var(--display);display:block}
+@media print{
+  @page{size:A4;margin:0}
+  body *{visibility:hidden}
+  #card,#card *{visibility:visible}
+  #card{position:absolute;left:0;top:0;border:0;margin:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="hero">
+    <div>
+      <p class="muted small" style="margin-bottom:6px">MBA Marketing Management · Local Business Digital Presence Audit</p>
+      <h1>Love Over Coffee, Vijay Nagar</h1>
+      <p>A cafe with a strong Google reputation. This portfolio checks how well the rest of its digital presence supports it, then sets out a 30-day plan to close the gaps.</p>
+      <label for="team" style="margin-top:14px">Team name and members</label>
+      <input type="text" id="team" placeholder="Type your team name and members here">
+    </div>
+    <div class="listing" aria-label="Google listing as customers see it">
+      <div class="name">Love Over Coffee - Indore (Vijay Nagar)</div>
+      <div class="rate"><b>4.7</b><span class="stars" aria-hidden="true">★★★★★</span><span class="muted">901 Google reviews</span></div>
+      <div class="muted small">Cafe · ₹200–400 per person · Open, closes 12 am</div>
+      <div class="actions"><span>Reserve a table</span><span>Order online</span><span>Directions</span><span>Call</span></div>
+      <dl>
+        <dt>Address</dt><dd>Plot No 11, Scheme No 51, Scheme No 113, Indore, MP 452001</dd>
+        <dt>Phone</dt><dd>093296 97769</dd>
+        <dt>Menu link</dt><dd>link.zomato.com</dd>
+      </dl>
+      <p class="muted small" style="margin:10px 0 0">Recreated from the Google listing the team captured.</p>
+    </div>
+  </div>
+</header>
+
+<nav aria-label="Sections">
+  <div class="wrap" role="tablist">
+    <button role="tab" data-tab="overview" aria-selected="true">Overview</button>
+    <button role="tab" data-tab="snapshot" aria-selected="false">01 Business snapshot</button>
+    <button role="tab" data-tab="google" aria-selected="false">02 Google audit</button>
+    <button role="tab" data-tab="social" aria-selected="false">03 Social media audit</button>
+    <button role="tab" data-tab="plan" aria-selected="false">04 30-day plan</button>
+    <button role="tab" data-tab="card" aria-selected="false">Audit card</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- OVERVIEW -->
+<section id="overview" class="tab on">
+  <h2>Audit at a glance</h2>
+  <div class="grid g3 tiles" style="margin-bottom:16px">
+    <div class="panel"><span class="muted small">Google presence (average of 5)</span><b id="tGoogle">–</b></div>
+    <div class="panel"><span class="muted small">Social media (average of 6)</span><b id="tSocial">–</b></div>
+    <div class="panel"><span class="muted small">30-day plan completed</span><b id="tPlan">0%</b></div>
+  </div>
+  <div class="grid g2">
+    <div class="panel">
+      <h3>All criteria, lowest first</h3>
+      <div class="cv tall"><canvas id="cAll" role="img" aria-label="Bar chart of all audit scores, lowest first"></canvas></div>
+      <p class="muted small" style="margin-top:8px">Scores come from the sliders in the Google and Social tabs. Change a slider and this chart updates.</p>
+    </div>
+    <div class="panel">
+      <h3>Biggest gap right now</h3>
+      <p id="gapName" style="font:700 1.3rem var(--display);margin-bottom:6px">–</p>
+      <p id="gapRec"></p>
+      <hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
+      <h3>How this portfolio works</h3>
+      <p class="small">Everything marked <span class="tag warn">verify</span> needs a check on the live account before you submit. Google facts come straight from the listing you captured. Instagram could not be viewed automatically, so those scores start at a neutral 5 until you set them.</p>
+      <p class="small">Your edits are saved in this browser. Use the Audit card tab to paste the share link for the QR code.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 01 SNAPSHOT -->
+<section id="snapshot" class="tab">
+  <h2>01 Business snapshot</h2>
+  <div class="grid g2">
+    <div class="panel">
+      <h3>Business profile</h3>
+      <table>
+        <tr><th>Name</th><td>Love Over Coffee, Vijay Nagar outlet, Indore</td></tr>
+        <tr><th>Type</th><td>Cafe (casual, cozy dining)</td></tr>
+        <tr><th>Price</th><td>₹200–400 per person (reported by 253 people on Google)</td></tr>
+        <tr><th>Hours</th><td>Open until 12 am (as shown on Google)</td></tr>
+        <tr><th>Location</th><td>Scheme No 51 area, Vijay Nagar, Indore</td></tr>
+        <tr><th>Network</th><td>Part of the Love Over Coffee chain, which also has outlets elsewhere (for example Raja Park, Jaipur)</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>Target customers</h3>
+      <p class="small muted">The audit's reading of who the cafe serves, based on its price band, menu and review language. Edit to match your team's view.</p>
+      <div>
+        <span class="chip">College students and young adults</span>
+        <span class="chip">Friend groups and casual meet-ups</span>
+        <span class="chip">Remote workers and freelancers</span>
+        <span class="chip">Couples (the name and cozy interior)</span>
+        <span class="chip">Families on weekends</span>
+      </div>
+      <p class="small" style="margin-top:8px">Evidence: reviews praise a calm, aesthetic space "perfect for relaxing or working", friendly staff, board games, and affordable prices.</p>
+    </div>
+    <div class="panel">
+      <h3>Products and services</h3>
+      <p class="small"><b>Hero items (Google "menu highlights"):</b> Lotus Biscoff Coffee, Cappuccino, Cold Coffee, Tiramisu, Cheese Fondue, Tex-Mex Nachos, Lemon Mint Ice Tea, Espresso, Dark Chocolate Frappe, Potato Cheese Shots, Mango Mojito, Cafe Frappe.</p>
+      <p class="small"><b>Food range:</b> sandwiches, pizzas, pasta, garlic bread, plus Masala Pulao mentioned in reviews.</p>
+      <p class="small"><b>Services:</b> dine-in, table reservation, online ordering, board games.</p>
+    </div>
+    <div class="panel">
+      <h3>Existing digital platforms</h3>
+      <table>
+        <tr><th>Platform</th><th>Status</th></tr>
+        <tr><td>Google Business Profile</td><td>Active, <span class="tag ok">updated by owner 1 week ago</span></td></tr>
+        <tr><td>Zomato (menu and ordering link)</td><td>Linked from Google</td></tr>
+        <tr><td>Instagram (chain): @loveovercoffee_</td><td>Linked by the team <span class="tag warn">verify</span></td></tr>
+        <tr><td>Instagram (Indore outlet): @loveovercoffee_indore_</td><td>Found in earlier research <span class="tag warn">verify</span></td></tr>
+        <tr><td>Facebook, Justdial, Mappls</td><td>Listings found in earlier research <span class="tag warn">verify</span></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 02 GOOGLE -->
+<section id="google" class="tab">
+  <h2>02 Google presence audit</h2>
+  <div class="note">Scores are the auditor's judgement from the captured listing. Drag a slider if your team sees it differently.</div>
+  <div class="grid g2">
+    <div class="panel">
+      <h3>Scorecard (0–10)</h3>
+      <div id="gSliders"></div>
+    </div>
+    <div class="panel">
+      <h3>Shape of the profile</h3>
+      <div class="cv"><canvas id="cGRadar" role="img" aria-label="Radar chart of Google audit scores"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="panel">
+      <h3>What customers say</h3>
+      <p class="small">Google's AI summary of the 901 reviews points to delicious coffee, a wide menu (pasta, sandwiches, Masala Pulao), a calm and aesthetic space good for working, friendly staff and board games.</p>
+      <p class="small"><b>Review snippets on the listing:</b> hygiene, service, drinks, price and interior all rated well; cheese fondue called out as a "very different" dip; "very affordable prices".</p>
+      <p class="small"><b>Photo tags customers use:</b> garlic bread, biscoff cappuccino, cheese fondue, shakes, hot chocolate, huge menu.</p>
+    </div>
+    <div class="panel">
+      <h3>Ratings by platform</h3>
+      <p class="small muted">Google is filled in. Add the rating from other platforms and the chart updates.</p>
+      <div class="scroll"><table id="ratingTbl"><tr><th>Platform</th><th>Rating</th><th>Reviews</th></tr></table></div>
+      <div class="cv" style="height:220px;margin-top:10px"><canvas id="cRate" role="img" aria-label="Bar chart of rating by platform"></canvas></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <h3>Business information consistency check</h3>
+    <p class="small muted">Google is prefilled from the listing. Type what each other platform shows. Rows that differ from Google turn red, which is how you evidence the "inconsistent information" gap.</p>
+    <div class="scroll"><table id="napTbl"></table></div>
+    <p id="napSummary" class="small" style="margin-top:10px"></p>
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <h3>Findings by criterion</h3>
+    <div class="scroll"><table>
+      <tr><th>Criterion</th><th>What we saw</th><th>Gap</th></tr>
+      <tr><td>Search visibility</td><td>Shows up in local Vijay Nagar cafe roundups. Reserve, order, directions and call buttons are all live.</td><td>Description may not use search words people type (area, signature items). <span class="tag warn">verify</span></td></tr>
+      <tr><td>Business information</td><td>Hours, phone, price band, menu link and address are present. Owner updated the profile a week ago.</td><td>The address line lists two scheme numbers ("Scheme No 51, Scheme No 113"), which is confusing for new customers.</td></tr>
+      <tr><td>Reviews and ratings</td><td>4.7 from 901 reviews, with strongly positive themes.</td><td>Owner reply rate not visible. <span class="tag warn">verify</span></td></tr>
+      <tr><td>Photos</td><td>Business-uploaded videos (0:24 to 0:45) plus customer photos with clear food tags.</td><td>Latest owner uploads are 3 to 5 months old.</td></tr>
+      <tr><td>Customer engagement</td><td>Popular times and live crowd data are on.</td><td>Q&amp;A and Google Posts not seen. <span class="tag warn">verify</span></td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- 03 SOCIAL -->
+<section id="social" class="tab">
+  <h2>03 Social media audit</h2>
+  <div class="note"><b>Verify:</b> Instagram could not be opened automatically, so these six scores start at 5 (neutral). Open the account, use the "What to check" prompt under each slider, then set your scores.</div>
+  <div class="grid g2">
+    <div class="panel">
+      <h3>Scorecard (0–10)</h3>
+      <div id="sSliders"></div>
+    </div>
+    <div class="panel">
+      <h3>Shape of the social presence</h3>
+      <div class="cv"><canvas id="cSRadar" role="img" aria-label="Radar chart of social media audit scores"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="panel">
+      <h3>Chain account vs Indore outlet account</h3>
+      <p class="small muted">Follower counts carried over from earlier research. Re-check them on Instagram and edit.</p>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
+        <div><label for="fChain">@loveovercoffee_ (chain)</label><input type="number" id="fChain" min="0"></div>
+        <div><label for="fOut">@loveovercoffee_indore_ (outlet)</label><input type="number" id="fOut" min="0"></div>
+      </div>
+      <div class="cv" style="height:230px;margin-top:10px"><canvas id="cFol" role="img" aria-label="Bar chart comparing follower counts"></canvas></div>
+      <p class="small" id="folNote"></p>
+    </div>
+    <div class="panel">
+      <h3>Engagement rate calculator</h3>
+      <p class="small muted">Look at the last 9 to 12 posts of the outlet account and enter the averages.</p>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
+        <div><label for="eF">Followers</label><input type="number" id="eF" min="0"></div>
+        <div><label for="eL">Average likes per post</label><input type="number" id="eL" min="0"></div>
+        <div><label for="eC">Average comments per post</label><input type="number" id="eC" min="0"></div>
+        <div><label for="eP">Posts per week</label><input type="number" id="eP" min="0" step="0.5"></div>
+      </div>
+      <p style="margin-top:14px"><span class="muted small">Engagement rate</span><br><b id="erOut" style="font:700 2rem var(--display)">–</b></p>
+      <p class="small" id="erNote"></p>
+      <p class="small muted">Rule of thumb only: for food and drink accounts, roughly 1% to 3% is a healthy range. Use it as a rough guide, not a hard benchmark.</p>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <h3>Audit checklist</h3>
+    <p class="small muted">Tick what the account does well. The count feeds your discussion, not the scores above.</p>
+    <div id="chk" class="grid g2" style="gap:6px"></div>
+  </div>
+</section>
+
+<!-- 04 PLAN -->
+<section id="plan" class="tab">
+  <h2>04 30-day marketing plan</h2>
+  <div class="panel" style="margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Plan progress</b><span id="planTxt" class="muted small"></span></div>
+    <div class="bar" style="margin-top:8px"><i id="planBar"></i></div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="panel">
+      <h3>Tasks per week by platform</h3>
+      <div class="cv" style="height:250px"><canvas id="cWeek" role="img" aria-label="Stacked bar chart of tasks per week by platform"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>KPI tracker</h3>
+      <p class="small muted">Targets are proposals. Set baselines from the live accounts, then update "Now" through the month.</p>
+      <div class="scroll"><table id="kpiTbl"></table></div>
+    </div>
+  </div>
+  <div class="panel" style="margin-bottom:16px">
+    <h3>KPI progress toward target</h3>
+    <div class="cv" style="height:260px"><canvas id="cKpi" role="img" aria-label="Bar chart of KPI progress percent"></canvas></div>
+  </div>
+
+  <div class="filters">
+    <div><label for="fPlat">Platform</label>
+      <select id="fPlat"><option value="all">All platforms</option><option>Google</option><option>Instagram</option><option>All listings</option></select></div>
+    <div><label for="fWeek">Week</label>
+      <select id="fWeek"><option value="all">All weeks</option><option value="1">Week 1 (days 1–7)</option><option value="2">Week 2 (days 8–14)</option><option value="3">Week 3 (days 15–21)</option><option value="4">Week 4 (days 22–30)</option></select></div>
+    <div><label for="fDone">Status</label>
+      <select id="fDone"><option value="all">All</option><option value="open">Not done</option><option value="done">Done</option></select></div>
+  </div>
+  <div id="tasks"></div>
+</section>
+
+<!-- CARD -->
+<section id="card-tab" class="tab" data-id="card">
+  <h2>One-page audit card</h2>
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="panel">
+      <label for="plink">Portfolio link for the QR code</label>
+      <input type="text" id="plink" placeholder="Paste the shared link of this portfolio">
+      <p class="small muted" style="margin-top:8px">The QR code must open the complete portfolio. Share this page first, paste its link here, then print or screenshot the card.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+        <button class="btn" id="btnPrint">Print or save as PDF</button>
+        <button class="btn alt" id="btnAuto">Use lowest-scoring criterion</button>
+      </div>
+    </div>
+    <div class="panel small">
+      <b>Tips</b>
+      <p style="margin-top:6px">The card text is editable. Click any field on the card to change it. If printing is blocked in your browser view, open the shared link in a new tab and print from there, or take a full-page screenshot.</p>
+    </div>
+  </div>
+  <div class="cardwrap">
+    <div id="card">
+      <div class="bk"><h2>LOCAL BUSINESS DIGITAL PRESENCE AUDIT</h2></div>
+      <div><label>Business</label><div class="val" style="font-weight:600">Love Over Coffee, Vijay Nagar, Indore (cafe)</div></div>
+      <div><label for="cTeam">Team</label><textarea class="val" id="cTeam" rows="2"></textarea></div>
+      <div class="sc">
+        <div><b id="cG">–</b><span style="font-size:9pt;color:#5B6577">Google score /10</span></div>
+        <div><b id="cS">–</b><span style="font-size:9pt;color:#5B6577">Social score /10</span></div>
+        <div><b>4.7</b><span style="font-size:9pt;color:#5B6577">Google rating (901 reviews)</span></div>
+      </div>
+      <div><label for="cGap">Biggest digital gap</label><textarea class="val" id="cGap" rows="3"></textarea></div>
+      <div><label for="cRec">Top recommendation</label><textarea class="val" id="cRec" rows="4"></textarea></div>
+      <div class="qr">
+        <div class="box"><div id="qrBox"></div></div>
+        <div style="font:700 12pt var(--display);margin-top:3mm">SCAN TO VIEW COMPLETE PROJECT</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ---------- data ---------- */
+var GOOGLE=[
+ {k:'Search visibility',s:7,ev:'Appears in local Vijay Nagar cafe lists; reserve, order, directions and call buttons are live. Check: does the description use words like "cafe in Vijay Nagar"?',rec:'Add area and signature-item words to the Google description and post a Google update every week.'},
+ {k:'Business information',s:6,ev:'Hours, phone, price band, menu link and address present. The address shows two scheme numbers, which is confusing.',rec:'Standardise name, address, pin code, phone, hours and price band across every listing.'},
+ {k:'Reviews and ratings',s:9,ev:'4.7 from 901 reviews with strong positive themes. Check: does the owner reply?',rec:'Keep reviews coming with table QR cards, and reply to every review within 48 hours.'},
+ {k:'Photos',s:7,ev:'Owner videos exist but are 3 to 5 months old; customers add tagged food photos.',rec:'Upload 20 fresh photos and 4 short videos a month (Biscoff coffee, fondue, nachos, ambience).'},
+ {k:'Customer engagement',s:5,ev:'Popular times are on. Check: is Q&A answered, are Google Posts used, are reviews replied to?',rec:'Turn on and answer Q&A, reply to all reviews, and post weekly offers on Google.'}
+];
+var SOCIAL=[
+ {k:'Profile optimisation',s:5,ev:'Check: outlet bio has area, hours, order link and reservation number? Highlights set up? Profile photo clear? Is it obvious which account is the Indore outlet?',rec:'Rewrite the outlet bio with area, hours, order link and reservation number, and add story highlights.'},
+ {k:'Content quality',s:5,ev:'Check: photo and video quality, consistent look, hero items (Biscoff coffee, fondue) shown well, reels versus static posts.',rec:'Shoot reels around hero items with one consistent look and a clear hook in the first seconds.'},
+ {k:'Content frequency',s:5,ev:'Check: count posts in the last 30 days and the longest gap between posts.',rec:'Move to 5 posts a week on a fixed content calendar.'},
+ {k:'Engagement',s:5,ev:'Check: average likes and comments against followers (use the calculator below).',rec:'Use polls, questions and reposts of customer tags to lift engagement toward 3%.'},
+ {k:'Customer interaction',s:5,ev:'Check: are comments answered, DMs answered, tags reshared, and how fast?',rec:'Answer comments and DMs within 2 hours and reshare customer tags to stories.'},
+ {k:'Call to action',s:5,ev:'Check: does each post ask for one action (reserve, order, visit, save, share)? Is the link in bio useful?',rec:'End every post with one clear action: reserve, order on Zomato, or save the post.'}
+];
+var NAP=[
+ {k:'Pin code',g:'452001'},
+ {k:'Phone',g:'093296 97769'},
+ {k:'Closing time',g:'12 am'},
+ {k:'Price per person',g:'₹200–400'},
+ {k:'Address',g:'Plot No 11, Scheme No 51, Scheme No 113, Indore, Madhya Pradesh 452001'}
+];
+var NAPCOLS=['Zomato','Instagram','Facebook','Justdial','Mappls'];
+var RATEPLAT=[
+ {k:'Google',r:'4.7',n:'901'},{k:'Zomato',r:'',n:''},{k:'Justdial',r:'',n:''},{k:'Facebook',r:'',n:''}
+];
+var CHECKS=['Bio names the area (Vijay Nagar) and the cafe type','Opening hours in bio or highlights','Link in bio goes to menu, order or reservation','Phone or reservation number visible','Story highlights for menu, offers and reviews','Hero items shown in reels','Customer posts reshared','Comments get replies','Polls or questions used in stories','Every post has a clear call to action','Posting on a regular schedule','Consistent look across posts'];
+var TASKS=[
+ {w:1,d:'Days 1–3',p:'All listings',o:'Make business details consistent',a:'Correct name, address, pin code, phone, hours and price band on Google, Zomato, Instagram, Facebook, Justdial and Mappls so they all match.',k:'0 mismatches in the consistency table'},
+ {w:1,d:'Days 2–4',p:'Google',o:'Be found for local searches',a:'Rewrite the Google description with the area and signature items (Biscoff coffee, cheese fondue, board games). Fill every attribute and category.',k:'Profile 100% complete; weekly search views up'},
+ {w:1,d:'Days 4–7',p:'Instagram',o:'Make the Indore account clear and useful',a:'Rewrite the outlet bio with area, hours, order link and reservation number. Add highlights: Menu, Fondue, Board games, Reviews.',k:'Bio link clicks and profile visits up'},
+ {w:2,d:'Days 8–10',p:'Google',o:'Refresh visual proof',a:'Shoot and upload 20 photos and 4 short videos: Biscoff coffee, fondue, nachos, interior, board games. Add a few each week.',k:'20 new photos; photo views up'},
+ {w:2,d:'Days 8–14',p:'Instagram',o:'Post consistently',a:'Run a content calendar of 5 posts a week: 2 reels, 2 photo or carousel posts, 1 customer-content repost. Pillars: hero items, ambience, offers.',k:'5 posts per week; reach per post'},
+ {w:2,d:'Days 10–14',p:'Google',o:'Collect more reviews',a:'Place a QR review card on each table, brief staff to ask happy guests, and send a thank-you message with the review link after online orders.',k:'Reviews 901 to 960; rating stays 4.7 or above'},
+ {w:3,d:'Days 15–17',p:'Google',o:'Show the owner is listening',a:'Reply to every new and past review within 48 hours using a short friendly template. Handle negative reviews politely and offer to fix the issue.',k:'90% reply rate within 48 hours'},
+ {w:3,d:'Days 15–21',p:'Instagram',o:'Build two-way conversation',a:'Answer comments and DMs within 2 hours. Use story polls ("pick next week\'s special") and reshare customer tags.',k:'Response time under 2 hours; engagement rate 3%'},
+ {w:3,d:'Days 18–21',p:'Google',o:'Turn views into visits and orders',a:'Add a clear action to every post and every Google Post: Reserve, Order on Zomato, Get directions. Post one weekly offer on Google.',k:'Calls, direction requests and menu clicks up'},
+ {w:4,d:'Days 22–26',p:'Instagram',o:'Reach new audiences',a:'Work with 3 local micro-creators or college communities in Vijay Nagar for a board-game and coffee evening. Tag the outlet account.',k:'Outlet followers +15%; reach up'},
+ {w:4,d:'Days 24–28',p:'Instagram',o:'Fill quiet hours',a:'Use the Popular Times chart to pick weekday off-peak slots and promote a "work from cafe" or board-game offer on Instagram and Google.',k:'Offer redemptions; weekday footfall'},
+ {w:4,d:'Days 29–30',p:'All listings',o:'Measure and decide',a:'Compare every KPI with its baseline, keep the actions that worked, and plan month two.',k:'KPI report completed'}
+];
+var KPIS=[
+ {k:'Google reviews (count)',b:901,t:960,u:''},
+ {k:'Google rating',b:4.7,t:4.7,u:''},
+ {k:'New Google photos added',b:0,t:20,u:''},
+ {k:'Review reply rate (%)',b:0,t:90,u:''},
+ {k:'Instagram posts per week',b:0,t:5,u:''},
+ {k:'Outlet Instagram followers',b:1240,t:1426,u:''},
+ {k:'Engagement rate (%)',b:0,t:3,u:''}
+];
+
+/* ---------- state ---------- */
+var KEY='loc-audit-v1';
+var st={team:'',g:GOOGLE.map(function(x){return x.s}),s:SOCIAL.map(function(x){return x.s}),
+ nap:{},rate:RATEPLAT.map(function(x){return {r:x.r,n:x.n}}),fChain:12000,fOut:1240,
+ er:{f:'',l:'',c:'',p:''},chk:[],done:{},kpi:KPIS.map(function(x){return {b:x.b,t:x.t,c:x.b}}),
+ plink:'',cTeam:null,cGap:'Business details differ across platforms (pin code, phone, closing time, price), and the Indore Instagram account is much smaller than the chain account.',
+ cRec:'Make business details identical on every listing, then post five times a week on the outlet Instagram with a clear call to action on each post.'};
+try{var raw=localStorage.getItem(KEY);if(raw){var o=JSON.parse(raw);for(var k in o){st[k]=o[k];}}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function avg(a){return a.reduce(function(x,y){return x+y},0)/a.length}
+function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function scoreColor(v){return v>=7?css('--mint'):(v>=5?css('--amber'):css('--red'))}
+
+/* ---------- tabs ---------- */
+var tabs=document.querySelectorAll('nav button');
+function show(id){
+  tabs.forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===id?'true':'false')});
+  document.querySelectorAll('.tab').forEach(function(s){
+    var sid=s.dataset.id||s.id; s.classList.toggle('on',sid===id);
+  });
+  window.scrollTo(0,0);
+  setTimeout(drawAll,30);
+}
+tabs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.tab)})});
+
+/* ---------- sliders ---------- */
+function buildSliders(list,host,key){
+  var h='';
+  list.forEach(function(c,i){
+    h+='<div class="crit"><div class="top"><label for="'+key+i+'" style="margin:0">'+esc(c.k)+'</label><span class="score" id="'+key+'v'+i+'"></span></div>'+
+       '<input type="range" id="'+key+i+'" min="0" max="10" step="1" value="'+st[key][i]+'" aria-label="'+esc(c.k)+' score">'+
+       '<div class="small muted">'+esc(c.ev)+'</div></div>';
+  });
+  $(host).innerHTML=h;
+  list.forEach(function(c,i){
+    var r=$(key+i);
+    function upd(){var v=+r.value;st[key][i]=v;var el=$(key+'v'+i);el.textContent=v;el.style.color=scoreColor(v);}
+    upd();
+    r.addEventListener('input',function(){upd();save();refresh();});
+  });
+}
+
+/* ---------- charts ---------- */
+var charts={};
+function mk(id,cfg){
+  var el=$(id); if(!el||typeof Chart==='undefined')return;
+  if(charts[id]){charts[id].destroy();}
+  charts[id]=new Chart(el.getContext('2d'),cfg);
+}
+function base(){
+  var t=css('--ink'),g=css('--line');
+  return {t:t,g:g,m:css('--muted')};
+}
+function radar(id,labels,data,color){
+  var b=base();
+  mk(id,{type:'radar',data:{labels:labels,datasets:[{data:data,backgroundColor:color+'33',borderColor:color,pointBackgroundColor:color,borderWidth:2}]},
+   options:{maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{r:{min:0,max:10,ticks:{stepSize:2,color:b.m,backdropColor:'transparent'},grid:{color:b.g},angleLines:{color:b.g},pointLabels:{color:b.t,font:{size:12}}}}}});
+}
+function drawAll(){
+  var b=base();
+  Chart.defaults.color=b.m; Chart.defaults.font.family=css('--body');
+  // overview all
+  var all=GOOGLE.map(function(c,i){return {k:'Google: '+c.k,v:st.g[i]}}).concat(SOCIAL.map(function(c,i){return {k:'Social: '+c.k,v:st.s[i]}}));
+  all.sort(function(a,b2){return a.v-b2.v});
+  mk('cAll',{type:'bar',data:{labels:all.map(function(x){return x.k}),datasets:[{data:all.map(function(x){return x.v}),backgroundColor:all.map(function(x){return scoreColor(x.v)}),borderRadius:3}]},
+    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{min:0,max:10,grid:{color:b.g}},y:{grid:{display:false},ticks:{color:b.t}}}}});
+  radar('cGRadar',GOOGLE.map(function(c){return c.k}),st.g,css('--red'));
+  radar('cSRadar',SOCIAL.map(function(c){return c.k}),st.s,css('--mint'));
+  // ratings
+  var rl=[],rv=[];
+  RATEPLAT.forEach(function(p,i){var v=parseFloat(st.rate[i].r);if(!isNaN(v)){rl.push(p.k);rv.push(v);}});
+  mk('cRate',{type:'bar',data:{labels:rl,datasets:[{data:rv,backgroundColor:css('--latte'),borderRadius:3}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:3,max:5,grid:{color:b.g}},x:{grid:{display:false},ticks:{color:b.t}}}}});
+  // followers
+  mk('cFol',{type:'bar',data:{labels:['Chain account','Indore outlet account'],datasets:[{data:[+st.fChain||0,+st.fOut||0],backgroundColor:[css('--ink'),css('--red')],borderRadius:3}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:b.g}},x:{grid:{display:false},ticks:{color:b.t}}}}});
+  // week stacked
+  var plats=['Google','Instagram','All listings'],cols=[css('--red'),css('--mint'),css('--latte')];
+  mk('cWeek',{type:'bar',data:{labels:['Week 1','Week 2','Week 3','Week 4'],datasets:plats.map(function(p,i){
+      return {label:p,backgroundColor:cols[i],data:[1,2,3,4].map(function(w){return TASKS.filter(function(t){return t.w===w&&t.p===p}).length})}})},
+    options:{maintainAspectRatio:false,scales:{x:{stacked:true,grid:{display:false},ticks:{color:b.t}},y:{stacked:true,beginAtZero:true,ticks:{stepSize:1},grid:{color:b.g}}},plugins:{legend:{labels:{color:b.t}}}}});
+  // kpi progress
+  var kp=st.kpi.map(function(x){return progress(x)});
+  mk('cKpi',{type:'bar',data:{labels:KPIS.map(function(x){return x.k}),datasets:[{data:kp,backgroundColor:kp.map(function(v){return v>=100?css('--mint'):css('--latte')}),borderRadius:3}]},
+    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{min:0,max:100,title:{display:true,text:'% of the way to target',color:b.m},grid:{color:b.g}},y:{grid:{display:false},ticks:{color:b.t}}}}});
+}
+function progress(x){
+  var b=+x.b,t=+x.t,c=+x.c;
+  if(t===b){return c>=t?100:0;}
+  var p=(c-b)/(t-b)*100; return Math.max(0,Math.min(100,Math.round(p)));
+}
+
+/* ---------- overview + card summary ---------- */
+function lowest(){
+  var best=null;
+  GOOGLE.forEach(function(c,i){if(best===null||st.g[i]<best.v)best={k:'Google: '+c.k,v:st.g[i],rec:c.rec}});
+  SOCIAL.forEach(function(c,i){if(st.s[i]<best.v)best={k:'Social: '+c.k,v:st.s[i],rec:c.rec}});
+  return best;
+}
+function refresh(){
+  var g=avg(st.g),s=avg(st.s);
+  $('tGoogle').textContent=g.toFixed(1)+' / 10';
+  $('tSocial').textContent=s.toFixed(1)+' / 10';
+  $('cG').textContent=g.toFixed(1);$('cS').textContent=s.toFixed(1);
+  var l=lowest();
+  $('gapName').textContent=l.k+' (score '+l.v+')';
+  $('gapRec').textContent=l.rec;
+  drawAll();
+}
+
+/* ---------- ratings table ---------- */
+function buildRate(){
+  var t=$('ratingTbl'),h='<tr><th>Platform</th><th>Rating (out of 5)</th><th>Reviews</th></tr>';
+  RATEPLAT.forEach(function(p,i){
+    h+='<tr><td>'+esc(p.k)+'</td><td><input type="number" step="0.1" min="0" max="5" data-r="'+i+'" value="'+esc(st.rate[i].r)+'" aria-label="'+esc(p.k)+' rating"></td><td><input type="number" min="0" data-n="'+i+'" value="'+esc(st.rate[i].n)+'" aria-label="'+esc(p.k)+' review count"></td></tr>';
+  });
+  t.innerHTML=h;
+  t.querySelectorAll('input').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      if(inp.dataset.r!==undefined)st.rate[+inp.dataset.r].r=inp.value;else st.rate[+inp.dataset.n].n=inp.value;
+      save();drawAll();
+    });
+  });
+}
+
+/* ---------- consistency table ---------- */
+function norm(row,v){
+  v=String(v||'').toLowerCase();
+  if(row==='Phone'){var d=v.replace(/\D/g,'');return d.slice(-10);}
+  return v.replace(/:00/g,'').replace(/per person/g,'').replace(/[^a-z0-9₹]/g,'');
+}
+function buildNap(){
+  var t=$('napTbl'),h='<tr><th>Detail</th><th>Google</th>';
+  NAPCOLS.forEach(function(c){h+='<th>'+c+'</th>'});
+  h+='<th>Result</th></tr>';
+  NAP.forEach(function(r,ri){
+    h+='<tr data-row="'+ri+'"><td><b>'+esc(r.k)+'</b></td><td>'+esc(r.g)+'</td>';
+    NAPCOLS.forEach(function(c,ci){
+      var v=(st.nap[ri+'_'+ci])||'';
+      h+='<td><input type="text" data-k="'+ri+'_'+ci+'" value="'+esc(v)+'" style="min-width:110px" aria-label="'+esc(r.k)+' on '+c+'"></td>';
+    });
+    h+='<td class="res"></td></tr>';
+  });
+  t.innerHTML=h;
+  t.querySelectorAll('input').forEach(function(inp){
+    inp.addEventListener('input',function(){st.nap[inp.dataset.k]=inp.value;save();evalNap();});
+  });
+  evalNap();
+}
+function evalNap(){
+  var mism=0,filled=0;
+  NAP.forEach(function(r,ri){
+    var bad=false,any=false;
+    NAPCOLS.forEach(function(c,ci){
+      var v=st.nap[ri+'_'+ci];
+      if(v&&String(v).trim()){any=true;filled++;if(norm(r.k,v)!==norm(r.k,r.g))bad=true;}
+    });
+    var tr=document.querySelector('#napTbl tr[data-row="'+ri+'"]');
+    var cell=tr.querySelector('.res');
+    if(!any){cell.innerHTML='<span class="tag warn">add values</span>';}
+    else if(bad){mism++;cell.innerHTML='<span class="tag bad">differs from Google</span>';}
+    else{cell.innerHTML='<span class="tag ok">matches Google</span>';}
+  });
+  $('napSummary').textContent=filled===0?'Add what each platform shows to see how many details disagree.':
+    mism+' of '+NAP.length+' details differ from Google across the platforms you checked.';
+}
+
+/* ---------- social extras ---------- */
+function buildChecks(){
+  var h='';
+  CHECKS.forEach(function(c,i){
+    h+='<label style="font-weight:500;display:flex;gap:8px;align-items:flex-start;margin:0"><input type="checkbox" data-c="'+i+'" '+(st.chk.indexOf(i)>-1?'checked':'')+' style="margin-top:4px"> <span>'+esc(c)+'</span></label>';
+  });
+  $('chk').innerHTML=h;
+  $('chk').querySelectorAll('input').forEach(function(cb){
+    cb.addEventListener('change',function(){
+      var i=+cb.dataset.c,p=st.chk.indexOf(i);
+      if(cb.checked&&p<0)st.chk.push(i);if(!cb.checked&&p>-1)st.chk.splice(p,1);save();
+    });
+  });
+}
+function folNote(){
+  var c=+st.fChain||0,o=+st.fOut||0;
+  $('folNote').textContent=(c>0&&o>0)?'The outlet account has '+(o/c*100).toFixed(1)+'% of the chain account\'s followers. Customers searching for the Vijay Nagar cafe may land on the larger account, which does not carry local details.':'';
+}
+function calcER(){
+  var f=+st.er.f,l=+st.er.l,c=+st.er.c;
+  if(f>0&&(l>0||c>0)){
+    var er=(l+c)/f*100;
+    $('erOut').textContent=er.toFixed(2)+'%';
+    $('erNote').textContent=er>=3?'Strong for a local cafe.':(er>=1?'In the typical range. Room to grow with polls, questions and reels.':'Below the typical range. Focus on content people want to save or share.');
+  }else{$('erOut').textContent='–';$('erNote').textContent='Enter followers and average likes or comments.';}
+}
+
+/* ---------- plan ---------- */
+function buildKpi(){
+  var h='<tr><th>KPI</th><th>Start</th><th>Target</th><th>Now</th></tr>';
+  KPIS.forEach(function(x,i){
+    var v=st.kpi[i];
+    h+='<tr><td>'+esc(x.k)+'</td>'+
+      '<td><input type="number" step="any" data-i="'+i+'" data-f="b" value="'+v.b+'" style="min-width:70px" aria-label="'+esc(x.k)+' start"></td>'+
+      '<td><input type="number" step="any" data-i="'+i+'" data-f="t" value="'+v.t+'" style="min-width:70px" aria-label="'+esc(x.k)+' target"></td>'+
+      '<td><input type="number" step="any" data-i="'+i+'" data-f="c" value="'+v.c+'" style="min-width:70px" aria-label="'+esc(x.k)+' now"></td></tr>';
+  });
+  $('kpiTbl').innerHTML=h;
+  $('kpiTbl').querySelectorAll('input').forEach(function(inp){
+    inp.addEventListener('input',function(){st.kpi[+inp.dataset.i][inp.dataset.f]=inp.value;save();drawAll();});
+  });
+}
+function buildTasks(){
+  var fp=$('fPlat').value,fw=$('fWeek').value,fd=$('fDone').value,h='',n=0;
+  TASKS.forEach(function(t,i){
+    var done=!!st.done[i];
+    if(fp!=='all'&&t.p!==fp)return;
+    if(fw!=='all'&&String(t.w)!==fw)return;
+    if(fd==='open'&&done)return;
+    if(fd==='done'&&!done)return;
+    n++;
+    h+='<div class="task'+(done?' done':'')+'"><input type="checkbox" data-t="'+i+'" '+(done?'checked':'')+' aria-label="Mark done: '+esc(t.o)+'">'+
+      '<div><b>'+esc(t.o)+'</b><div class="act" style="margin-top:4px">'+esc(t.a)+'</div>'+
+      '<div class="meta"><span class="chip">Week '+t.w+' · '+esc(t.d)+'</span><span class="chip">'+esc(t.p)+'</span><span class="chip">KPI: '+esc(t.k)+'</span></div></div></div>';
+  });
+  $('tasks').innerHTML=n?h:'<p class="muted">No tasks match these filters. Change a filter to see more.</p>';
+  $('tasks').querySelectorAll('input').forEach(function(cb){
+    cb.addEventListener('change',function(){st.done[+cb.dataset.t]=cb.checked;save();buildTasks();planProg();});
+  });
+}
+function planProg(){
+  var d=0;TASKS.forEach(function(t,i){if(st.done[i])d++});
+  var p=Math.round(d/TASKS.length*100);
+  $('planBar').style.width=p+'%';
+  $('planTxt').textContent=d+' of '+TASKS.length+' actions done';
+  $('tPlan').textContent=p+'%';
+}
+
+/* ---------- card ---------- */
+function qr(){
+  var url=(st.plink&&st.plink.trim())||'';
+  var box=$('qrBox');box.innerHTML='';
+  if(!url){box.innerHTML='<div style="width:150px;height:150px;display:flex;align-items:center;justify-content:center;font-size:10pt;color:#5B6577;text-align:center">Paste the portfolio link to create the QR code</div>';return;}
+  if(typeof QRCode==='undefined'){box.textContent='QR library did not load';return;}
+  new QRCode(box,{text:url,width:150,height:150,colorDark:'#15213B',colorLight:'#ffffff'});
+}
+
+/* ---------- wire up ---------- */
+function bindText(id,key,after){
+  var el=$(id);if(!el)return;
+  if(st[key]!==null&&st[key]!==undefined)el.value=st[key];
+  el.addEventListener('input',function(){st[key]=el.value;save();if(after)after();});
+}
+buildSliders(GOOGLE,'gSliders','g');
+buildSliders(SOCIAL,'sSliders','s');
+buildRate();buildNap();buildChecks();buildKpi();buildTasks();planProg();
+
+bindText('team','team',function(){$('cTeam').value=st.team;st.cTeam=st.team;});
+bindText('cTeam','cTeam');
+if(st.cTeam===null||st.cTeam===undefined){$('cTeam').value=st.team||'';}
+bindText('cGap','cGap');bindText('cRec','cRec');
+bindText('plink','plink',qr);
+$('fChain').value=st.fChain;$('fOut').value=st.fOut;
+$('fChain').addEventListener('input',function(){st.fChain=this.value;save();folNote();drawAll();});
+$('fOut').addEventListener('input',function(){st.fOut=this.value;save();folNote();drawAll();});
+['eF','eL','eC','eP'].forEach(function(id,i){
+  var k=['f','l','c','p'][i];$(id).value=st.er[k];
+  $(id).addEventListener('input',function(){st.er[k]=this.value;save();calcER();});
+});
+['fPlat','fWeek','fDone'].forEach(function(id){$(id).addEventListener('change',buildTasks)});
+$('btnAuto').addEventListener('click',function(){
+  var l=lowest();st.cGap=l.k+' (score '+l.v+' out of 10)';st.cRec=l.rec;
+  $('cGap').value=st.cGap;$('cRec').value=st.cRec;save();
+});
+$('btnPrint').addEventListener('click',function(){try{window.print();}catch(e){}});
+$('cTeam').addEventListener('input',function(){st.cTeam=this.value;save();});
+
+folNote();calcER();qr();refresh();
+window.addEventListener('load',drawAll);
+if(window.matchMedia){var mq=window.matchMedia('(prefers-color-scheme: dark)');
+  var h=function(){buildSliders(GOOGLE,'gSliders','g');buildSliders(SOCIAL,'sSliders','s');refresh();};
+  if(mq.addEventListener)mq.addEventListener('change',h);}
+})();
+</script>
+</body>
+</html>
